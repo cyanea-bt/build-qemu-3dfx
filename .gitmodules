@@ -1,0 +1,9 @@
+[submodule "qemu-3dfx"]
+	path = qemu-3dfx
+	url = https://github.com/cyanea-bt/qemu-3dfx.git
+[submodule "qemu-xtra"]
+	path = qemu-xtra
+	url = https://github.com/cyanea-bt/qemu-xtra.git
+[submodule "build-djgpp"]
+	path = build-djgpp
+	url = https://github.com/cyanea-bt/build-djgpp.git
