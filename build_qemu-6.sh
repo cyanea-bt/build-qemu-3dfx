@@ -7,9 +7,6 @@ if [ "$MSYSTEM" != "MINGW64" ]; then
   exit 1; 
 fi
 
-# temporarily downgrade curl
-pacman -U --noconfirm packages/qemu-6/*.zst
-
 # clean up qemu-3dfx
 cd qemu-3dfx && git clean -dfx
 if [ -d "./build" ]; then
@@ -41,6 +38,3 @@ EXTRA_C="-Wno-error=maybe-uninitialized -Wno-error=dangling-pointer= -Wno-error=
                           --enable-gnutls --enable-slirp --enable-tools --enable-libssh --enable-dsound \
                           --enable-qcow1 --enable-zstd --enable-lzo --enable-vnc --enable-vnc-jpeg \
                           --enable-vnc-sasl --enable-docs --enable-capstone && make -j8 && make install
-
-# restore curl
-pacman -S --noconfirm mingw-w64-x86_64-curl mingw-w64-i686-curl
