@@ -1,0 +1,11 @@
+filesystem
+base-devel
+msys2-devel
+vim
+unzip
+zstd
+rsync
+wget
+curl
+bsdtar
+man
