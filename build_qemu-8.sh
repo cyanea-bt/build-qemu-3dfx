@@ -27,7 +27,7 @@ mkdir ../build && cd ../build
 if [ -d "/opt/qemu-8" ]; then
   rm -rf /opt/qemu-8
 fi
-../qemu-8-patched/configure --prefix=/opt/qemu-8 --target-list=x86_64-softmmu,i386-softmmu \
+../qemu-8-patched/configure --prefix=/opt/qemu-8 --target-list=x86_64-softmmu,i386-softmmu,ppc-softmmu,ppc64-softmmu,arm-softmmu,aarch64-softmmu,riscv32-softmmu,riscv64-softmmu,or1k-softmmu \
                           --enable-whpx --enable-sdl --enable-sdl-image --disable-gtk --disable-gettext \
                           --enable-libusb --enable-usb-redir --enable-libnfs --enable-vdi --enable-vmdk \
                           --enable-vhdx --enable-vvfat --enable-vpc --enable-virglrenderer --enable-qed \
