@@ -23,7 +23,7 @@ sed '' packages/pacman_*.txt | pacman -S -
 **when asked, choose ALL (default/Enter), confirm everything with YES and install/reinstall all**
 ```bash
 pacman -Syyu
-pacman -U packages/*.zst
+pacman -U --needed packages/mingw32/*.zst
 ```
 * close msys2 msys shell
 * **setup DONE**
@@ -31,14 +31,14 @@ pacman -U packages/*.zst
 * start msys2 **mingw32** shell
 ```bash
 cd ~/build-qemu-3dfx
-bash build_guest-wrappers.sh
+bash ./build_guest-wrappers.sh
 ```
 * close msys2 **mingw32** shell
 * start msys2 **mingw64** shell
 ```bash
 cd ~/build-qemu-3dfx
-bash build_qemu-8.sh
-bash build_host-openglide.sh
+bash ./build_qemu-8.sh
+bash ./build_host-openglide.sh
 ```
 * **builds DONE**
 * find all generated files in `/opt`
