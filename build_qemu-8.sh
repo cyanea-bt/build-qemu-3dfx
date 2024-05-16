@@ -34,7 +34,7 @@ mkdir ../build && cd ../build
 if [ -d "/opt/qemu-8" ]; then
   rm -rf /opt/qemu-8
 fi
-../qemu-8-patched/configure --prefix=/opt/qemu-8 --target-list="${LIST_TARGETS}" \
+../qemu-8-patched/configure --prefix=/opt/qemu-8 --target-list="${LIST_TARGETS}" --enable-strip \
                           --enable-whpx --enable-sdl --enable-sdl-image --disable-gtk --disable-gettext \
                           --enable-libusb --enable-usb-redir --enable-libnfs --enable-vdi --enable-vmdk \
                           --enable-vhdx --enable-vvfat --enable-vpc --enable-virglrenderer --enable-qed \

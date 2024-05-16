@@ -34,7 +34,7 @@ mkdir ../build && cd ../build
 if [ -d "/opt/qemu-7" ]; then
   rm -rf /opt/qemu-7
 fi
-../qemu-7-patched/configure --prefix=/opt/qemu-7 --target-list="${LIST_TARGETS}" \
+../qemu-7-patched/configure --prefix=/opt/qemu-7 --target-list="${LIST_TARGETS}" --enable-strip \
                           --enable-whpx --enable-sdl --enable-sdl-image --disable-gtk --disable-gettext \
                           --enable-libusb --enable-usb-redir --enable-libnfs --enable-vdi \
                           --enable-vvfat --enable-virglrenderer --enable-qed \
