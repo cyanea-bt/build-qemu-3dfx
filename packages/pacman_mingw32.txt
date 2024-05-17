@@ -39,3 +39,4 @@ mingw-w64-i686-portaudio
 mingw-w64-i686-lz4
 mingw-w64-i686-libcacard
 mingw-w64-i686-snappy
+mingw-w64-i686-spice-protocol

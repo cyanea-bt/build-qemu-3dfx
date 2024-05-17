@@ -40,3 +40,7 @@ mingw-w64-x86_64-jack2
 mingw-w64-x86_64-lz4
 mingw-w64-x86_64-libcacard
 mingw-w64-x86_64-snappy
+mingw-w64-x86_64-spice-protocol
+mingw-w64-x86_64-spice
+mingw-w64-x86_64-gst-libav
+mingw-w64-x86_64-gst-plugins-ugly

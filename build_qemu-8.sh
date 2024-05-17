@@ -45,4 +45,5 @@ fi
                           --enable-guest-agent --enable-guest-agent-msi --enable-hv-balloon --enable-iconv \
                           --enable-live-block-migration --enable-opengl --enable-pa --enable-jack \
                           --enable-pixman --enable-png --enable-replication --enable-smartcard --enable-snappy \
+                          --disable-spice --disable-spice-protocol \
                           --disable-vnc-sasl --enable-docs --enable-capstone && make -j8 && make install
