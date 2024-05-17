@@ -34,10 +34,15 @@ mkdir ../build && cd ../build
 if [ -d "/opt/qemu-8" ]; then
   rm -rf /opt/qemu-8
 fi
-../qemu-8-patched/configure --prefix=/opt/qemu-8 --target-list="${LIST_TARGETS}" --enable-strip \
+../qemu-8-patched/configure --prefix=/opt/qemu-8 --target-list="${LIST_TARGETS}" --enable-strip --enable-lto \
                           --enable-whpx --enable-sdl --enable-sdl-image --disable-gtk --disable-gettext \
                           --enable-libusb --enable-usb-redir --enable-libnfs --enable-vdi --enable-vmdk \
                           --enable-vhdx --enable-vvfat --enable-vpc --enable-virglrenderer --enable-qed \
                           --enable-gnutls --enable-slirp --enable-tools --enable-libssh --enable-dsound \
-                          --enable-qcow1 --enable-zstd --enable-lzo --enable-vnc --enable-vnc-jpeg \
-                          --enable-vnc-sasl --enable-docs --enable-capstone && make -j8 && make install
+                          --enable-qcow1 --enable-zstd --enable-lzo --disable-vnc --disable-vnc-jpeg \
+                          --enable-bzip2 --enable-cloop --enable-colo-proxy --enable-curl --disable-curses \
+                          --disable-dbus-display --enable-bochs --enable-dmg --disable-gtk-clipboard \
+                          --enable-guest-agent --enable-guest-agent-msi --enable-hv-balloon --enable-iconv \
+                          --enable-live-block-migration --enable-opengl --enable-pa --enable-jack \
+                          --enable-pixman --enable-png --enable-replication --enable-smartcard --enable-snappy \
+                          --disable-vnc-sasl --enable-docs --enable-capstone && make -j8 && make install

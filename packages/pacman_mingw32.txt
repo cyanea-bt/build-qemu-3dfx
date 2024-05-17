@@ -1,3 +1,4 @@
+mingw-w64-i686-bzip2
 mingw-w64-i686-lzo2
 mingw-w64-i686-zlib
 mingw-w64-i686-libssh
@@ -31,3 +32,10 @@ mingw-w64-i686-gettext-runtime
 mingw-w64-i686-gettext-tools
 mingw-w64-i686-python-sphinx
 mingw-w64-i686-python-sphinx_rtd_theme
+mingw-w64-i686-msitools
+mingw-w64-i686-pulseaudio
+mingw-w64-i686-libsamplerate
+mingw-w64-i686-portaudio
+mingw-w64-i686-lz4
+mingw-w64-i686-libcacard
+mingw-w64-i686-snappy

@@ -9,3 +9,5 @@ wget
 curl
 bsdtar
 man
+mpdecimal
+python

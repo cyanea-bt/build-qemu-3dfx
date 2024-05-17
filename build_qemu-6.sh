@@ -34,10 +34,15 @@ mkdir ../build && cd ../build
 if [ -d "/opt/qemu-6" ]; then
   rm -rf /opt/qemu-6
 fi
-../qemu-6-patched/configure --prefix=/opt/qemu-6 --target-list="${LIST_TARGETS}" \
+../qemu-6-patched/configure --prefix=/opt/qemu-6 --target-list="${LIST_TARGETS}" --enable-lto \
                           --enable-whpx --enable-sdl --enable-sdl-image --disable-gtk --disable-gettext \
                           --enable-libusb --enable-usb-redir --enable-libnfs --enable-vdi \
                           --enable-vvfat --enable-virglrenderer --enable-qed \
                           --enable-gnutls --enable-slirp --enable-tools --enable-libssh --enable-dsound \
-                          --enable-qcow1 --enable-zstd --enable-lzo --enable-vnc --enable-vnc-jpeg \
-                          --enable-vnc-sasl --enable-docs --enable-capstone && make -j8 && make install
+                          --enable-qcow1 --enable-zstd --enable-lzo --disable-vnc --disable-vnc-jpeg \
+                          --enable-bzip2 --enable-cloop --enable-curl --disable-curses \
+                          --enable-bochs --enable-dmg \
+                          --enable-guest-agent --enable-guest-agent-msi --enable-iconv \
+                          --enable-live-block-migration --enable-opengl --enable-pa --enable-jack \
+                          --enable-replication --enable-smartcard --enable-snappy \
+                          --disable-vnc-sasl --enable-docs --enable-capstone && make -j8 && make install
