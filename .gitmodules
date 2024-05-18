@@ -4,3 +4,6 @@
 [submodule "qemu-xtra"]
 	path = qemu-xtra
 	url = https://github.com/cyanea-bt/qemu-xtra.git
+[submodule "packages"]
+	path = packages
+	url = https://github.com/cyanea-bt/MINGW-packages.git
