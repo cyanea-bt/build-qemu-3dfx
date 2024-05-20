@@ -29,6 +29,8 @@ else
   git clone https://github.com/cyanea-bt/qemu-7-patched
   cd qemu-7-patched
 fi
+rsync -r ../qemu-0/hw/3dfx ../qemu-1/hw/mesa ./hw/
+patch -p0 -i ../01-qemu72x-mesa-glide.patch
 bash ../scripts/sign_commit ..
 mkdir ../build && cd ../build
 if [ -d "/opt/qemu-7" ]; then
@@ -45,5 +47,5 @@ fi
                           --enable-guest-agent --enable-guest-agent-msi --enable-iconv \
                           --enable-live-block-migration --enable-opengl --enable-pa --enable-jack \
                           --enable-png --enable-replication --enable-smartcard --enable-snappy \
-                          --disable-spice --disable-spice-protocol \
+                          --enable-spice --enable-spice-protocol \
                           --disable-vnc-sasl --enable-docs --enable-capstone && make -j8 && make install
