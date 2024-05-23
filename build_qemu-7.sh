@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # check mingw env
-if [ "$MSYSTEM" != "MINGW64" ]; then 
-  echo "Error: MSYSTEM == $MSYSTEM";
+if [[ $MSYSTEM != "MINGW64" ]]; then 
+  echo "Error: MSYSTEM == ${MSYSTEM}";
   echo "Use MINGW64 shell instead!";
   exit 1; 
 fi
@@ -16,11 +16,11 @@ fi
 
 # clean up qemu-3dfx
 cd qemu-3dfx && git clean -dfx
-if [ -d "./build" ]; then
+if [[ -d "./build" ]]; then
   rm -rf ./build
 fi
 
-if [ -d "./qemu-7-patched" ]; then
+if [[ -d "./qemu-7-patched" ]]; then
   cd qemu-7-patched
   git clean -dfx
   git reset --hard
@@ -33,7 +33,7 @@ rsync -r ../qemu-0/hw/3dfx ../qemu-1/hw/mesa ./hw/
 patch -p0 -i ../01-qemu72x-mesa-glide.patch
 bash ../scripts/sign_commit ..
 mkdir ../build && cd ../build
-if [ -d "/opt/qemu-7" ]; then
+if [[ -d "/opt/qemu-7" ]]; then
   rm -rf /opt/qemu-7
 fi
 ../qemu-7-patched/configure --prefix=/opt/qemu-7 --target-list="${LIST_TARGETS}" --enable-strip --enable-lto \
