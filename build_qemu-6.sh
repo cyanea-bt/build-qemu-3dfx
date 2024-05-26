@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
 # check mingw env
-if [[ $MSYSTEM != "MINGW64" ]]; then 
+if [[ $MSYSTEM != "MINGW32" ]]; then 
   echo "Error: MSYSTEM == ${MSYSTEM}";
-  echo "Use MINGW64 shell instead!";
+  echo "Use MINGW32 shell instead!";
   exit 1; 
 fi
+
+# install correct libslirp version
+/usr/bin/env MSYSTEM=MSYS /usr/bin/bash -lc "pacman -U --noconfirm ./packages/mingw32/extra/*libslirp-4.6.1*.zst"
 
 # set qemu targets. start with no parameters for default targets
 if [[ $# -eq 0 ]] ; then
@@ -29,15 +32,16 @@ else
   git clone https://github.com/cyanea-bt/qemu-6-patched
   cd qemu-6-patched
 fi
-rsync -r ../qemu-0/hw/3dfx ../qemu-1/hw/mesa ./hw/
-patch -p0 -i ../02-qemu620-mesa-glide.patch
-bash ../scripts/sign_commit ..
+# qemu-3dfx not working for win32 builds, at least for now
+# rsync -r ../qemu-0/hw/3dfx ../qemu-1/hw/mesa ./hw/
+# patch -p0 -i ../02-qemu620-mesa-glide.patch
+# bash ../scripts/sign_commit ..
 mkdir ../build && cd ../build
-if [[ -d "/opt/qemu-6" ]]; then
-  rm -rf /opt/qemu-6
+if [[ -d "/opt/qemu-6-win32" ]]; then
+  rm -rf /opt/qemu-6-win32
 fi
-../qemu-6-patched/configure --prefix=/opt/qemu-6 --target-list="${LIST_TARGETS}" --enable-lto \
-                          --enable-whpx --enable-sdl --enable-sdl-image --disable-gtk --disable-gettext \
+../qemu-6-patched/configure --prefix=/opt/qemu-6-win32 --target-list="${LIST_TARGETS}" --enable-lto \
+                          --disable-whpx --enable-sdl --enable-sdl-image --disable-gtk --disable-gettext \
                           --enable-libusb --enable-usb-redir --enable-libnfs --enable-vdi \
                           --enable-vvfat --enable-virglrenderer --enable-qed \
                           --enable-gnutls --enable-slirp --enable-tools --enable-libssh --enable-dsound \
