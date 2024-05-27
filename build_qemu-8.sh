@@ -32,16 +32,15 @@ else
   git clone https://github.com/cyanea-bt/qemu-8-patched
   cd qemu-8-patched
 fi
-# qemu-3dfx not working for win32 builds, at least for now
-# rsync -r ../qemu-0/hw/3dfx ../qemu-1/hw/mesa ./hw/
-# patch -p0 -i ../00-qemu82x-mesa-glide.patch
-# bash ../scripts/sign_commit ..
+rsync -r ../qemu-0/hw/3dfx ../qemu-1/hw/mesa ./hw/
+patch -p0 -i ../00-qemu82x-mesa-glide.patch
+bash ../scripts/sign_commit ..
 mkdir ../build && cd ../build
 if [[ -d "/opt/qemu-8-win32" ]]; then
   rm -rf /opt/qemu-8-win32
 fi
 ../qemu-8-patched/configure --prefix=/opt/qemu-8-win32 --target-list="${LIST_TARGETS}" --enable-strip --enable-lto \
-                          --disable-whpx --enable-sdl --enable-sdl-image --disable-gtk --disable-gettext \
+                          --enable-sdl --enable-sdl-image --disable-gtk --disable-gettext \
                           --enable-libusb --enable-usb-redir --enable-libnfs --enable-vdi --enable-vmdk \
                           --enable-vhdx --enable-vvfat --enable-vpc --enable-virglrenderer --enable-qed \
                           --enable-gnutls --enable-slirp --enable-tools --enable-libssh --enable-dsound \
