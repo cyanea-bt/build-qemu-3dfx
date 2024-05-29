@@ -5,9 +5,20 @@ EXTRA_OPTS="--enable-whpx"
 opt_host_os="win64"
 opt_all_targets=0
 opt_dlls=0
+script_name=$(basename "${BASH_SOURCE}")
+# logfile="${PWD}/log.txt"
+logfile="/opt/log.txt"
+
+# log to stdout and logfile
+# $1 = string to write
+log_date(){
+    local date_ts="[$(date "+%Y.%m.%d-%H:%M:%S")]"
+    local msg="$date_ts ${script_name}: ${1}"
+    echo "${msg}" | tee -a "${logfile}"
+}
 
 print_usage(){
-    echo "Usage: $0 [-o (win32|win64)] [-a] [-d]"
+    echo "Usage: ${script_name} [-o (win32|win64)] [-a] [-d]"
     echo "-o    set host OS (default=win64)"
     echo "-a    build all supported targets"
     echo "-d    copy/archive required dlls"
@@ -35,12 +46,11 @@ while getopts "ho:ad" opt; do
             print_usage
             exit 1
         fi
-        echo "os - ${opt_host_os}"
         ;;
-    a)  echo "all targets"
+    a)  log_date "opt - all targets"
         opt_all_targets=1
         ;;
-    d)  echo "export dlls"
+    d)  log_date "opt - export dlls"
         opt_dlls=1
         ;;
     esac
@@ -53,6 +63,9 @@ if [[ $MSYSTEM != $BUILD_ENV ]]; then
     echo "Use ${BUILD_ENV} shell instead!";
     exit 1; 
 fi
+
+log_date "os - ${opt_host_os}"
+log_date "build started"
 
 # install correct libslirp version
 if [[ $opt_host_os == "win32" ]]; then 
@@ -68,7 +81,7 @@ fi
 
 # copy dlls if needed
 if [[ $opt_dlls -eq 1 ]] ; then
-    echo "copy dlls not implemented yet"
+    log_date "copy dlls not implemented yet"
 fi
 
 # clean up qemu-3dfx
@@ -105,4 +118,14 @@ fi
                             --enable-live-block-migration --enable-opengl --enable-pa --enable-jack \
                             --enable-pixman --enable-png --enable-replication --enable-smartcard --enable-snappy \
                             --enable-spice --enable-spice-protocol --enable-strip --enable-lto \
-                            --disable-vnc-sasl --enable-docs --enable-capstone && make -j8 && make install
+                            --disable-vnc-sasl --enable-docs --enable-capstone \
+                            && log_date "configure SUCCESS" && make -j8 && make install
+
+# check build exit code
+retVal=${?}
+if [[ $retVal -ne 0 ]]; then
+    log_date "build ERROR! Exit: ${retVal}"
+    exit ${retVal}
+else
+    log_date "build SUCCESS!"
+fi
