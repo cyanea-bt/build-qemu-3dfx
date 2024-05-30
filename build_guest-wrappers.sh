@@ -2,7 +2,8 @@
 
 BUILD_ENV=MINGW32
 opt_host_os="win32"
-script_name=$(basename "${BASH_SOURCE}")
+script_name=$(basename "${BASH_SOURCE[0]}")
+script_path=$(dirname "$(realpath -s "${BASH_SOURCE[0]}")")
 # logfile="${PWD}/log.txt"
 logfile="/opt/log.txt"
 
@@ -21,7 +22,7 @@ if [[ $MSYSTEM != $BUILD_ENV ]]; then
     exit 1; 
 fi
 
-log_date "os - ${opt_host_os}"
+log_date "os - ${opt_host_os} (forced)"
 log_date "build started"
 
 # extract toolchains if they don't exist

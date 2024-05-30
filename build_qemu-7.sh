@@ -5,7 +5,8 @@ EXTRA_OPTS="--enable-whpx"
 opt_host_os="win64"
 opt_all_targets=0
 opt_dlls=0
-script_name=$(basename "${BASH_SOURCE}")
+script_name=$(basename "${BASH_SOURCE[0]}")
+script_path=$(dirname "$(realpath -s "${BASH_SOURCE[0]}")")
 # logfile="${PWD}/log.txt"
 logfile="/opt/log.txt"
 
@@ -79,11 +80,6 @@ else
     LIST_TARGETS="x86_64-softmmu,i386-softmmu,ppc-softmmu,ppc64-softmmu,arm-softmmu,aarch64-softmmu,riscv32-softmmu,riscv64-softmmu,or1k-softmmu"
 fi
 
-# copy dlls if needed
-if [[ $opt_dlls -eq 1 ]] ; then
-    log_date "copy dlls not implemented yet"
-fi
-
 # clean up qemu-3dfx
 cd qemu-3dfx && git clean -dfx
 if [[ -d "./build" ]]; then
@@ -103,10 +99,12 @@ rsync -r ../qemu-0/hw/3dfx ../qemu-1/hw/mesa ./hw/
 patch -p0 -i ../01-qemu72x-mesa-glide.patch
 bash ../scripts/sign_commit ..
 mkdir ../build && cd ../build
-if [[ -d "/opt/qemu-7-${opt_host_os}" ]]; then
-    rm -rf /opt/qemu-7-${opt_host_os}
+
+INSTALL_DIR="/opt/qemu-7-${opt_host_os}"
+if [[ -d "${INSTALL_DIR}" ]]; then
+    rm -rf "${INSTALL_DIR}"
 fi
-../qemu-7-patched/configure --prefix=/opt/qemu-7-${opt_host_os} --target-list="${LIST_TARGETS}" ${EXTRA_OPTS} \
+../qemu-7-patched/configure --prefix="${INSTALL_DIR}" --target-list="${LIST_TARGETS}" ${EXTRA_OPTS} \
                             --enable-sdl --enable-sdl-image --disable-gtk --disable-gettext \
                             --enable-libusb --enable-usb-redir --enable-libnfs --enable-vdi \
                             --enable-vvfat --enable-virglrenderer --enable-qed \
@@ -118,8 +116,8 @@ fi
                             --enable-live-block-migration --enable-opengl --enable-pa --enable-jack \
                             --enable-png --enable-replication --enable-smartcard --enable-snappy \
                             --enable-spice --enable-spice-protocol --enable-strip --enable-lto \
-                            --disable-vnc-sasl --enable-docs --enable-capstone \
-                            && log_date "configure SUCCESS" && make -j8 && make install
+                            --disable-vnc-sasl --enable-docs --enable-capstone && \
+                            log_date "configure SUCCESS" && make -j8 && make install
 
 # check build exit code
 retVal=${?}
@@ -128,4 +126,10 @@ if [[ $retVal -ne 0 ]]; then
     exit ${retVal}
 else
     log_date "build SUCCESS!"
+fi
+
+if [[ $opt_dlls -eq 1 ]] ; then
+    cd "${script_path}" && \
+    bash ./export_dlls.sh "${INSTALL_DIR}" && \
+    log_date "dll export SUCCESS" || exit 1
 fi

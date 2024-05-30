@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 opt_short_dates=0
-script_name=$(basename "${BASH_SOURCE}")
+script_name=$(basename "${BASH_SOURCE[0]}")
+script_path=$(dirname "$(realpath -s "${BASH_SOURCE[0]}")")
 # logfile="${PWD}/log.txt"
 logfile="/opt/log.txt"
 
@@ -37,11 +38,11 @@ shift $((OPTIND-1))		# remove parsed options and args from $@ list
 log_date "export all started"
 
 if [[ $opt_short_dates -eq 0 ]] ; then
-	bash ./export.sh -ad && \
-	bash ./export.sh -ado win32
+	bash ./export.sh -ad && log_date "win_64 DONE" && \
+	bash ./export.sh -ado win32 && log_date "win_32 DONE"
 else
-	bash ./export.sh -asd && \
-	bash ./export.sh -asdo win32
+	bash ./export.sh -asd && log_date "win_64 DONE" && \
+	bash ./export.sh -asdo win32 && log_date "win_32 DONE"
 fi
 
 # check exit code

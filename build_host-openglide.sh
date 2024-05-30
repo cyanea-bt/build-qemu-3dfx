@@ -2,7 +2,8 @@
 
 BUILD_ENV=MINGW64
 opt_host_os="win64"
-script_name=$(basename "${BASH_SOURCE}")
+script_name=$(basename "${BASH_SOURCE[0]}")
+script_path=$(dirname "$(realpath -s "${BASH_SOURCE[0]}")")
 # logfile="${PWD}/log.txt"
 logfile="/opt/log.txt"
 

@@ -9,7 +9,8 @@ opt_host_os="win64"
 opt_all_targets=0
 opt_short_dates=0
 opt_dlls=0
-script_name=$(basename "${BASH_SOURCE}")
+script_name=$(basename "${BASH_SOURCE[0]}")
+script_path=$(dirname "$(realpath -s "${BASH_SOURCE[0]}")")
 # logfile="${PWD}/log.txt"
 logfile="/opt/log.txt"
 
@@ -104,6 +105,7 @@ else
 	log_date "build SUCCESS!"
 fi
 
+log_date "packing with 7-zip"
 # run 7z in mingw64 since msys version is slow
 /usr/bin/env MSYSTEM=MINGW64 /usr/bin/bash -l << END2
 cd /opt
@@ -132,17 +134,15 @@ fi
 if [[ -d "./qemu-8-${opt_host_os}" ]]; then
   7z a -t7z -y -mx=9 -mhe=on -mmt=on -ms=on -mtc=on -mtm=on -mta=on "./qemu-8-${opt_host_os}_${DATE}.7z" "qemu-8-${opt_host_os}" || exit 1
 fi
-
-if [[ $opt_dlls -eq 1 ]] ; then
-	echo "archive dlls not implemented yet"
-fi
 END2
 
 # check 7-zip exit code
 retVal=${?}
 if [[ $retVal -ne 0 ]]; then
-	log_date "export ERROR! Exit: ${retVal}"
+	log_date "7-zip ERROR! Exit: ${retVal}"
 	exit ${retVal}
 else
-	log_date "export SUCCESS!"
+	log_date "7-zip SUCCESS!"
 fi
+
+log_date "export SUCCESS!"
