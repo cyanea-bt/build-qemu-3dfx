@@ -116,7 +116,8 @@ fi
                             --enable-live-block-migration --enable-opengl --enable-pa --enable-jack \
                             --enable-png --enable-replication --enable-smartcard --enable-snappy \
                             --enable-spice --enable-spice-protocol --enable-strip --enable-lto \
-                            --disable-vnc-sasl --enable-docs --enable-capstone && \
+                            --disable-vnc-sasl --enable-docs --enable-capstone --enable-lzfse \
+                            --enable-u2f && \
                             log_date "configure SUCCESS" && make -j8 && make install
 
 # check build exit code
